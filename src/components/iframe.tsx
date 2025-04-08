@@ -1,10 +1,12 @@
 'use client';
 
 import React from 'react';
-import ReactPlayer from 'react-player/lazy';
+import Image from 'next/image';
+import ReactPlayer from 'react-player/youtube';
 import styled from 'styled-components';
 
 import { getYoutubeEmbedVideoSrc } from '@/lib/get-youtube-embed-video-src';
+import { getYoutubePreviewVideoSrc } from '@/lib/get-youtube-preview-video-src';
 
 interface Props {
   width: string | number;
@@ -19,24 +21,19 @@ const StyledIFrameBlock = styled.div`
   border-radius: 8px;
 `;
 
-const StyledIFrameFallback = styled.div`
+const StyledIFramePreview = styled(Image)`
   width: 100%;
   height: 100%;
-  font-weight: 700;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  object-fit: cover;
   overflow: hidden;
   border-radius: 8px;
-  color: var(--primary);
-  background-color: var(--border);
 `;
 
 export const IFrame: React.FC<Props> = ({ width, height, src }) => {
   const [isMounted, setIsMounted] = React.useState(false);
 
   const embedSrc = getYoutubeEmbedVideoSrc(src);
+  const previewSrc = getYoutubePreviewVideoSrc(src);
 
   React.useEffect(() => {
     setIsMounted(true);
@@ -54,12 +51,14 @@ export const IFrame: React.FC<Props> = ({ width, height, src }) => {
           controls
         />
       ) : (
-        <IFrameFallback />
+        <StyledIFramePreview
+          width={530}
+          height={250}
+          src={previewSrc}
+          alt='Video preview'
+          priority
+        />
       )}
     </StyledIFrameBlock>
   );
-};
-
-export const IFrameFallback: React.FC = () => {
-  return <StyledIFrameFallback>Loading...</StyledIFrameFallback>;
 };

@@ -78,11 +78,7 @@ export const HeroSection: React.FC = () => {
             </Paragraph>
           </StyledHeroSlogan>
           <StyledHeroVideoBox>
-            <IFrame
-              width='100%'
-              height='100%'
-              src={'dQw4w9WgXcQ?si=zQ0gkmU-UaCJOI9H'}
-            />
+            <IFrame width='100%' height='100%' src={'dQw4w9WgXcQ'} />
           </StyledHeroVideoBox>
         </StyledHeroWrapper>
       </Container>
